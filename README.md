@@ -1,66 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧱 Projeto Base - Laravel + Filament + Docker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um projeto base para aplicações em Laravel com painel administrativo utilizando [Filament PHP](https://filamentphp.com/), totalmente containerizado com Docker.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Tecnologias Utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.3 (via Docker)
+- Laravel 11
+- Filament v3
+- MySQL 8.0
+- Docker + Docker Compose
+- Nginx
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📦 Requisitos
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- Conta no [GitHub](https://github.com/) (opcional)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Como usar
 
-## Laravel Sponsors
+### 1. Clone o projeto
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/seu-usuario/cg-project-base.git
+cd cg-project-base
+```
 
-### Premium Partners
+### 2. Configure o ambiente
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Copie o arquivo `.env.example` para criar seu arquivo de ambiente `.env`:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Se estiver usando Docker pela primeira vez, também pode ser necessário configurar as permissões de pastas:
 
-## Code of Conduct
+```bash
+chmod -R 775 storage bootstrap/cache
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Suba os containers com Docker
 
-## Security Vulnerabilities
+Execute o comando abaixo para iniciar os containers do projeto:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker-compose up -d --build
+```
+Esse comando irá:
 
-## License
+- Construir a imagem do PHP com todas as dependências necessárias
+- Iniciar os serviços: PHP, MySQL e Nginx
+- Disponibilizar a aplicação Laravel em: [http://localhost:8000](http://localhost:8000)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> 💡 Certifique-se de que as portas `8000` (Laravel) e `3306` (MySQL) estejam livres no seu sistema.
+
+### 4. Acesse o container PHP
+
+Execute o seguinte comando para abrir um terminal dentro do container da aplicação PHP:
+
+```bash
+docker exec -it php_app bash
+```
+Esse comando irá:
+
+- Abrir um terminal interativo (`bash`) dentro do container chamado `php_app`
+- Permitir que você execute comandos internos da aplicação, como `composer`, `php artisan`, entre outros
+
+### 5. Instale dependências e configure o Laravel
+
+Com o terminal aberto dentro do container `php_app`, execute os seguintes comandos:
+
+```bash
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan filament:install --panels
+php artisan make:filament-user
+```
+Esses comandos irão:
+
+- Instalar todas as dependências do projeto definidas no `composer.json`
+- Gerar a chave de criptografia da aplicação Laravel (`APP_KEY`)
+- Criar as tabelas padrão do banco de dados com as migrações
+- Instalar o Filament Admin Panel no projeto
+- Criar um usuário administrador para acesso ao painel `/admin`
+
+## 🌐 Acessos
+
+Após subir os containers e configurar o Laravel, acesse:
+
+- Aplicação Laravel: [http://localhost:8000](http://localhost:8000)
+- Painel Admin Filament: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+## 🔐 Usuário Admin
+
+Durante o comando:
+
+```bash
+php artisan make:filament-user
+```
+Você deverá informar:
+
+- **Nome**
+- **E-mail**
+- **Senha**
+
+Essas credenciais serão usadas para fazer login no painel administrativo em:  
+[http://localhost:8000/admin](http://localhost:8000/admin)
+
+## 📁 Estrutura de Diretórios
+
+Abaixo está a estrutura básica do projeto `cg-project-base`:
+
+```text
+cg-project-base/
+├── app/                    # Código da aplicação (controllers, models, policies etc.)
+├── bootstrap/              # Arquivos de inicialização do Laravel
+├── config/                 # Arquivos de configuração da aplicação
+├── database/               # Migrations, seeders e factories
+├── docker/                 # Configurações específicas para Docker (ex: nginx.conf)
+├── public/                 # Pasta pública (index.php, assets)
+├── resources/              # Views Blade, arquivos Vue/JS e SCSS
+├── routes/                 # Arquivos de rotas web, api, console
+├── storage/                # Arquivos gerados (logs, cache, uploads)
+├── tests/                  # Testes automatizados (PHPUnit)
+├── .env.example            # Arquivo de exemplo para variáveis de ambiente
+├── composer.json           # Dependências PHP
+├── Dockerfile              # Definição do container PHP
+├── docker-compose.yml      # Orquestração dos containers
+└── README.md               # Documentação do projeto
+```
+
+## 🛠️ Comandos Úteis
+
+Alguns comandos comuns para gerenciar o projeto:
+
+```bash
+docker-compose up -d         # Iniciar os containers
+docker-compose down          # Parar os containers
+docker exec -it php_app bash # Acessar o container PHP
+php artisan migrate          # Rodar as migrações do banco de dados
+php artisan db:seed          # Rodar os seeders (se houver)
+php artisan config:clear     # Limpar o cache de configuração
+```
+
+## 📝 Licença
+
+Este projeto está licenciado sob a licença [MIT](LICENSE).
+
+Você é livre para usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e/ou vender cópias do projeto, desde que preserve o aviso de copyright original.
+
