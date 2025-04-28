@@ -1,159 +1,108 @@
-# 🧱 Projeto Base - Laravel + Filament + Docker
+# Personal Budget Wallet 💼
 
-Este é um projeto base para aplicações em Laravel com painel administrativo utilizando [Filament PHP](https://filamentphp.com/), totalmente containerizado com Docker.
+Bem-vindo ao **Personal Budget Wallet**! Este é um projeto pessoal desenvolvido para ajudar no gerenciamento eficiente de **recebimentos**, **pagamentos** e **empréstimos**. A aplicação foi projetada para ser leve, moderna e fácil de usar.
 
----
+## 🌟 Objetivo
 
-## 🚀 Tecnologias Utilizadas
-
-- PHP 8.3 (via Docker)
-- Laravel 11
-- Filament v3
-- MySQL 8.0
-- Docker + Docker Compose
-- Nginx
+O objetivo principal do **Personal Budget Wallet** é fornecer uma ferramenta confiável para o gerenciamento de recursos financeiros, com foco em simplicidade e funcionalidade. Com ele, você pode acompanhar suas transações, gerar relatórios e organizar suas finanças de forma prática.
 
 ---
 
-## 📦 Requisitos
+## 🧰 Tecnologias Utilizadas
 
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-- Conta no [GitHub](https://github.com/) (opcional)
+- **Backend**:
+  - [PHP](https://www.php.net/) com [Filament](https://filamentphp.com/) para criação de painéis administrativos.
+  - Banco de dados [SQLite](https://www.sqlite.org/index.html) para uma solução leve e portátil.
+- **Frontend**:
+  - [React](https://react.dev/) para a construção de interfaces modernas e dinâmicas.
+- **Infraestrutura**:
+  - [Node.js](https://nodejs.org/) para suporte a funcionalidades adicionais no frontend.
+  - **Docker** para containerização e execução consistente em qualquer ambiente.
 
 ---
 
-## ⚙️ Como usar
+## 🚀 Funcionalidades
 
-### 1. Clone o projeto
+- **Gerenciamento de recursos financeiros**:
+  - Registro de **recebimentos**, **pagamentos** e **empréstimos**.
+  - Controle de saldos e histórico de transações.
+- **Interface administrativa**:
+  - Painel administrativo criado com [Filament](https://filamentphp.com/), facilitando o gerenciamento de dados.
+- **Relatórios detalhados**:
+  - Visualização de relatórios financeiros claros e objetivos.
+- **Responsividade**:
+  - Interface otimizada para dispositivos móveis e desktops.
 
-```bash
-git clone https://github.com/seu-usuario/personalbudgetwallet.git
-cd personalbudgetwallet
+---
+
+## 🛠️ Configuração e Execução
+
+### Pré-requisitos
+
+- [Docker](https://www.docker.com/) instalado na máquina.
+
+### Passos para rodar o projeto
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/personal-budget-wallet.git
+   cd personal-budget-wallet
+   ```
+
+2. Suba os containers com o Docker:
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Acesse o painel administrativo no navegador em:
+   ```
+   http://localhost:8000
+   ```
+
+4. O frontend estará disponível em:
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## 📸 Capturas de Tela
+
+| **Dashboard**             | **Relatórios de Transações**  |
+|---------------------------|-------------------------------|
+| ![Dashboard](docs/dashboard.png) | ![Relatórios](docs/reports.png) |
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Se você deseja melhorar o projeto, siga os passos abaixo:
+
+1. Faça um fork do repositório.
+2. Crie um branch para sua feature ou correção:
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. Envie um pull request explicando suas alterações.
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
+
+---
+
+### 🌟 Dicas Visuais para README.md
+
+Para deixar seu `README.md` mais atrativo, utilize ícones e badges:
+- **Ícones**: Explore bibliotecas como [Icons8](https://icons8.com/), [Flaticon](https://www.flaticon.com/) ou [Twemoji](https://github.com/twitter/twemoji).
+- **Badges**: Gere etiquetas personalizadas com [Shields.io](https://shields.io/).
+
+Exemplo de badge:
+```markdown
+![Docker](https://img.shields.io/badge/docker-enabled-blue) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-blue) ![React](https://img.shields.io/badge/React-18.0%2B-blue)
 ```
 
-### 2. Configure o ambiente
-
-Copie o arquivo `.env.example` para criar seu arquivo de ambiente `.env`:
-
-```bash
-cp .env.example .env
-```
-
-Se estiver usando Docker pela primeira vez, também pode ser necessário configurar as permissões de pastas:
-
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-### 3. Suba os containers com Docker
-
-Execute o comando abaixo para iniciar os containers do projeto:
-
-```bash
-docker-compose up -d --build
-```
-Esse comando irá:
-
-- Construir a imagem do PHP com todas as dependências necessárias
-- Iniciar os serviços: PHP, MySQL e Nginx
-- Disponibilizar a aplicação Laravel em: [http://localhost:8000](http://localhost:8000)
-
-> 💡 Certifique-se de que as portas `8000` (Laravel) e `3306` (MySQL) estejam livres no seu sistema.
-
-### 4. Acesse o container PHP
-
-Execute o seguinte comando para abrir um terminal dentro do container da aplicação PHP:
-
-```bash
-docker exec -it php_app bash
-```
-Esse comando irá:
-
-- Abrir um terminal interativo (`bash`) dentro do container chamado `php_app`
-- Permitir que você execute comandos internos da aplicação, como `composer`, `php artisan`, entre outros
-
-### 5. Instale dependências e configure o Laravel
-
-Com o terminal aberto dentro do container `php_app`, execute os seguintes comandos:
-
-```bash
-composer install
-php artisan key:generate
-php artisan migrate
-php artisan filament:install --panels
-php artisan make:filament-user
-```
-Esses comandos irão:
-
-- Instalar todas as dependências do projeto definidas no `composer.json`
-- Gerar a chave de criptografia da aplicação Laravel (`APP_KEY`)
-- Criar as tabelas padrão do banco de dados com as migrações
-- Instalar o Filament Admin Panel no projeto
-- Criar um usuário administrador para acesso ao painel `/admin`
-
-## 🌐 Acessos
-
-Após subir os containers e configurar o Laravel, acesse:
-
-- Aplicação Laravel: [http://localhost:8000](http://localhost:8000)
-- Painel Admin Filament: [http://localhost:8000/admin](http://localhost:8000/admin)
-
-## 🔐 Usuário Admin
-
-Durante o comando:
-
-```bash
-php artisan make:filament-user
-```
-Você deverá informar:
-
-- **Nome**
-- **E-mail**
-- **Senha**
-
-Essas credenciais serão usadas para fazer login no painel administrativo em:  
-[http://localhost:8000/admin](http://localhost:8000/admin)
-
-## 📁 Estrutura de Diretórios
-
-Abaixo está a estrutura básica do projeto `personalbudgetwallet`:
-
-```text
-personalbudgetwallet/
-├── app/                    # Código da aplicação (controllers, models, policies etc.)
-├── bootstrap/              # Arquivos de inicialização do Laravel
-├── config/                 # Arquivos de configuração da aplicação
-├── database/               # Migrations, seeders e factories
-├── docker/                 # Configurações específicas para Docker (ex: nginx.conf)
-├── public/                 # Pasta pública (index.php, assets)
-├── resources/              # Views Blade, arquivos Vue/JS e SCSS
-├── routes/                 # Arquivos de rotas web, api, console
-├── storage/                # Arquivos gerados (logs, cache, uploads)
-├── tests/                  # Testes automatizados (PHPUnit)
-├── .env.example            # Arquivo de exemplo para variáveis de ambiente
-├── composer.json           # Dependências PHP
-├── Dockerfile              # Definição do container PHP
-├── docker-compose.yml      # Orquestração dos containers
-└── README.md               # Documentação do projeto
-```
-
-## 🛠️ Comandos Úteis
-
-Alguns comandos comuns para gerenciar o projeto:
-
-```bash
-docker-compose up -d         # Iniciar os containers
-docker-compose down          # Parar os containers
-docker exec -it php_app bash # Acessar o container PHP
-php artisan migrate          # Rodar as migrações do banco de dados
-php artisan db:seed          # Rodar os seeders (se houver)
-php artisan config:clear     # Limpar o cache de configuração
-```
-
-## 📝 Licença
-
-Este projeto está licenciado sob a licença [MIT](LICENSE).
-
-Você é livre para usar, copiar, modificar, mesclar, publicar, distribuir, sublicenciar e/ou vender cópias do projeto, desde que preserve o aviso de copyright original.
-
+Resultado:
+![Docker](https://img.shields.io/badge/docker-enabled-blue) ![PHP](https://img.shields.io/badge/PHP-8.1%2B-blue) ![React](https://img.shields.io/badge/React-18.0%2B-blue)
