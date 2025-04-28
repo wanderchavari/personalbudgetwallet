@@ -45,8 +45,8 @@ O objetivo principal do **Personal Budget Wallet** é fornecer uma ferramenta co
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/personal-budget-wallet.git
-   cd personal-budget-wallet
+   git clone https://github.com/seu-usuario/personalbudgetwallet.git
+   cd personalbudgetwallet
    ```
 
 2. Suba os containers com o Docker:
@@ -54,19 +54,24 @@ O objetivo principal do **Personal Budget Wallet** é fornecer uma ferramenta co
    docker-compose up -d
    ```
 
-3. Acesse o painel administrativo no navegador em:
+3. Crie um usuário com (informe os dados solicitados):
+```bash
+php artisan make:filament-user
+```
+
+4. Acesse o painel administrativo no navegador em:
    ```
-   http://localhost:8000
+   http://localhost:8000/admin
    ```
 
-4. O frontend estará disponível em:
+5. Futuramente o frontend estará disponível em:
    ```
    http://localhost:3000
    ```
 
 ---
 
-## 📸 Capturas de Tela
+## 📸 Capturas de Tela (*Futuro)
 
 | **Dashboard**             | **Relatórios de Transações**  |
 |---------------------------|-------------------------------|
