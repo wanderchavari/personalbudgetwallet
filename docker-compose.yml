@@ -9,14 +9,14 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
-    depends_on:
-      - mysql
     networks:
       - app-network
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
       - COMPOSER_MEMORY_LIMIT=-1
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/database/database.sqlite
 
   webserver:
     image: nginx:alpine
@@ -28,22 +28,6 @@ services:
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - app
-    networks:
-      - app-network
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_db
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel
-    volumes:
-      - dbdata:/var/lib/mysql
     networks:
       - app-network
 

@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libsqlite3-dev \
     libicu-dev \
-    && docker-php-ext-install pdo pdo_mysql zip intl
+    && docker-php-ext-install pdo pdo_sqlite zip intl
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

@@ -28,8 +28,8 @@ Este é um projeto base para aplicações em Laravel com painel administrativo u
 ### 1. Clone o projeto
 
 ```bash
-git clone https://github.com/seu-usuario/cg-project-base.git
-cd cg-project-base
+git clone https://github.com/seu-usuario/personalbudgetwallet.git
+cd personalbudgetwallet
 ```
 
 ### 2. Configure o ambiente
@@ -117,10 +117,10 @@ Essas credenciais serão usadas para fazer login no painel administrativo em:
 
 ## 📁 Estrutura de Diretórios
 
-Abaixo está a estrutura básica do projeto `cg-project-base`:
+Abaixo está a estrutura básica do projeto `personalbudgetwallet`:
 
 ```text
-cg-project-base/
+personalbudgetwallet/
 ├── app/                    # Código da aplicação (controllers, models, policies etc.)
 ├── bootstrap/              # Arquivos de inicialização do Laravel
 ├── config/                 # Arquivos de configuração da aplicação
